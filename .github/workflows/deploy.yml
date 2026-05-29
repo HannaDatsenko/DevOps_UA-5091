@@ -3,7 +3,7 @@ name: Deploy to Azure Web App
 on:
   push:
     branches:
-      - main
+      - main  # или master
 
 permissions:
   id-token: write
@@ -17,8 +17,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    # Замените ID на данные вашего аккаунта Azure
+    - name: Log in to Azure
+      uses: azure/login@v2
+      with:
+        client-id: 'deaa059c-f985-49cc-8478-f6cde9231c01' # Application (client) ID вашего приложения/сервиса в Azure
+        tenant-id: 'd01d0419-9226-4f37-b3eb-15085044d5c7' # Directory (tenant) ID вашей подписки
+        subscription-id: '037b7212-5a93-43af-adc2-05470cf079cf' # ID вашей подписки
+
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v3
       with:
-        app-name: 'mySiteHanna'
-        package: '.'  # Точка означает текущую папку со всеми HTML-файлами
+        app-name: 'mySiteHanna' # Точное имя вашего App Service
+        package: '.'
